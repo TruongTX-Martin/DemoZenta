@@ -35,6 +35,28 @@ class index extends React.Component {
             labelValue: '',
             currentPolygon: null,
         }
+        this.escFunction = this.escFunction.bind(this);
+
+    }
+
+
+    componentDidMount() {
+        document.addEventListener("keydown", this.escFunction, false);
+    }
+    componentWillUnmount() {
+        document.removeEventListener("keydown", this.escFunction, false);
+    }
+
+    escFunction(event) {
+        if (event.keyCode === 27) {
+            const { listPolygon } = this.state;
+            const index = listPolygon.find(e => !e.isFinish);
+            if (index != -1) {
+                listPolygon.splice(index, 1);
+                this.setState({ listPolygon });
+            }
+
+        }
     }
 
     getMousePos = stage => {
